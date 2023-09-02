@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Query</title>
+    <link rel="stylesheet" type="text/css" href="light.css" id="light-theme-style" disabled>
+    <link rel="stylesheet" type="text/css" href="dark.css" id="dark-theme-style">
+</head>
+<body id="body">
+    <div class="navbar">
+        <a href="contact.html">Contact Me</a>
+        <a href="guide.html">API Guide</a>
+    </div>
+    <h1>API Query <span id="theme-icon" onclick="switchTheme()">☀️</span></h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="api_key"><b>API Key:</b></label>
+                <input type="text" id="api_key" name="api_key" required>
+            </div>
+            <div class="form-group">
+                <label for="question"><b>Question:</b></label>
+                <input type="text" id="question" name="question" required>
+            </div>
+            <div class="form-group">
+                <label for="model"><b>Model:</b></label>
+                <select id="model" name="model" required>
+                    <option value="amazon">Amazon Post</option>
+                    <option value="blog">Blog Post</option>
+                    <option value="youtube">YouTube Post</option>
+                    <option value="chat">Chat Bot</option>
+                    <option value="gpt-4">GPT-4</option>
+                    <option value="bardai">BardAI Google</option>
+                    <option value="image">Image</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product"><b>Product (only for Amazon Post model):</b></label>
+                <input type="range" id="product" name="product" min="1" max="10" oninput="updateProductValue(this.value)">
+                <span id="productValue">5</span>
+            </div>
+
+            <div class="form-group">
+                <label for="internet"><b>Internet (only for Chat Bot model):</b></label>
+                <select id="internet" name="internet">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+               <button id="copyButton" onclick="event.preventDefault(); copyResponse()">Copy</button>
+            </div>
+        </form>
+      <div class="output">
+    <h2>Output:</h2>
+    <pre></pre>
+      </div>
+    </div>
+    <p></p>
+    <div class="example-boxes">
+        <div class="example-box" onclick="setExample('example', 'India', 'blog')">
+            <h2>Blog Post Example</h2>
+        </div>
+        <div class="example-box" onclick="setExample('example', 'Apple Products', 'amazon')">
+            <h2>Amazon Post Example</h2>
+        </div>
+        <div class="example-box" onclick="setExample('example', 'https://www.youtube.com/watch?v=YBn1HYbFxLo', 'youtube')">
+            <h2>YouTube Post Example</h2>
+        </div>
+    </div>
+    <h4>To Get API Key, Contact pushkarop On Discord</h4>
+    <h4>Made By Pushkar Singh ♥️</h4>
+</body>
+<script>
+    // Load form data from localStorage when the page loads
+    document.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem('form_data')) {
+            let savedData = JSON.parse(localStorage.getItem('form_data'));
+            document.getElementById('api_key').value = savedData.api_key || '';
+            document.getElementById('question').value = savedData.question || '';
+            document.getElementById('model').value = savedData.model || '';
+            document.getElementById('product').value = savedData.product || '';
+            document.getElementById('internet').value = savedData.internet || '';
+        }
+    });
+
+    // Save form data to localStorage when the form changes
+    document.querySelector('form').addEventListener('change', (event) => {
+        let formData = {
+            api_key: document.getElementById('api_key').value,
+            question: document.getElementById('question').value,
+            model: document.getElementById('model').value,
+            product: document.getElementById('product').value,
+            internet: document.getElementById('internet').value
+        };
+        localStorage.setItem('form_data', JSON.stringify(formData));
+    });
+
+    // Your existing functions...
+    function updateProductValue(val) {
+        document.getElementById('productValue').textContent = val;
+    }
+
+    function copyResponse() {
+    event.preventDefault();
+    var responseHTML = document.querySelector('.output pre').innerHTML;
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = responseHTML;
+    textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        return document.execCommand('copy');  // Security exception may be thrown by some browsers.
+    } catch (ex) {
+        console.warn('Copy to clipboard failed.', ex);
+        return false;
+    } finally {
+        document.body.removeChild(textarea);
+    }
+}
+
+    function setExample(apiKey, question, model) {
+        document.getElementById('api_key').value = apiKey;
+        document.getElementById('question').value = question;
+        document.getElementById('model').value = model;
+        document.querySelector('form').submit();
+    }
+    function switchTheme() {
+        var currentTheme = localStorage.getItem('theme') || 'dark';
+        var newTheme = 'dark';
+        var newThemeIcon = '☀️';
+        if (currentTheme === 'dark') {
+            newTheme = 'light';
+            newThemeIcon = '🌕';
+            document.getElementById('light-theme-style').disabled = false;
+            document.getElementById('dark-theme-style').disabled = true;
+        } else {
+            newTheme = 'dark';
+            newThemeIcon = '☀️';
+            document.getElementById('light-theme-style').disabled = true;
+            document.getElementById('dark-theme-style').disabled = false;
+        }
+        document.getElementById('theme-icon').textContent = newThemeIcon;
+        localStorage.setItem('theme', newTheme);
+    }
+
+    // Load the theme from localStorage when the page loads
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.getElementById('light-theme-style').disabled = false;
+            document.getElementById('dark-theme-style').disabled = true;
+            document.getElementById('theme-icon').textContent = '🌕';
+        } else {
+            document.getElementById('light-theme-style').disabled = true;
+            document.getElementById('dark-theme-style').disabled = false;
+            document.getElementById('theme-icon').textContent = '☀️';
+        }
+    });
+
+    // Add an event listener to the form's submit event
+    document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();  // Prevent the form from being submitted the default way
+
+        let url = 'http://panel.magicgames.mooo.com:1037/api';
+        let api_key = document.getElementById('api_key').value;
+        let question = document.getElementById('question').value;
+        let model = document.getElementById('model').value;
+        let product = document.getElementById('product').value;
+        let internet = document.getElementById('internet').value;
+
+        let data = {
+            'api_key': api_key,
+            'model': model,
+            'question': question,
+        };
+
+        if (model == 'amazon') {
+            data['product'] = product;
+        } else if (model == 'chat') {
+            data['internet'] = internet;
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            let response = '';
+            if ('error' in data) {
+                response = data['error'];
+            } else {
+                response = data['answer'];
+            }
+            document.querySelector('.output pre').innerHTML = response;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F2E7;
+            color: #5D5C61;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="api-usage-guide">API Usage Guide</h1>
+<p>This guide provides examples of how to use different models in our API. Please replace <code>&lt;your_api_key&gt;</code> and <code>&lt;your_question&gt;</code> with your actual API key and question. For the YouTube model, replace <code>&lt;youtube_video_url&gt;</code> with the actual URL of the YouTube video. For the Amazon model, you can also specify the number of products with the <code>product</code> parameter.</p>
+<h2 id="1-amazon-model">1. Amazon Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"amazon"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>,
+    <span class="hljs-string">"product"</span>: <span class="hljs-number">10</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="2-blog-model">2. Blog Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"blog"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="3-youtube-model">3. YouTube Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"youtube"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;youtube_video_url&gt;"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="4-chat-model">4. Chat Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"chat"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>,
+    <span class="hljs-string">"internet"</span>: <span class="hljs-string">"false"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="5-image-model">5. Image Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"image"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>,
+    <span class="hljs-string">"internet"</span>: <span class="hljs-string">"false"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="6-gpt-4-model">6. GPT-4 Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"gpt-4"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+<h2 id="7-bardai-model">7. Bardai Model</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+url = <span class="hljs-string">"http://panel.magicgames.mooo.com:1037/api"</span>
+<span class="hljs-keyword">data</span> = {
+    <span class="hljs-string">"api_key"</span>: <span class="hljs-string">"&lt;your_api_key&gt;"</span>,
+    <span class="hljs-string">"model"</span>: <span class="hljs-string">"bardai"</span>,
+    <span class="hljs-string">"question"</span>: <span class="hljs-string">"&lt;your_question&gt;"</span>
+}
+
+response = requests.post(url, <span class="hljs-keyword">data</span>=json.dumps(<span class="hljs-keyword">data</span>))
+print(response.json())
+</code></pre>
+    </div>
+</body>
+</html>
